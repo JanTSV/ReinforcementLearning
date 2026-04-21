@@ -78,4 +78,13 @@
 
 \exercise{Multi-armed Bandits}
 
+\begin{enumerate}
+  \item With probability $1 - \epsilon$ we take the greedy action, with probabilty $\epsilon$ we take a random action.
+        The overall probabilty to take the greedy action is therefor $(1 - \epsilon) + \dfrac{\epsilon}{k}$. With $k=2, \epsilon = 0.5$ we get: $(1 - 0.5) + \dfrac{0.5}{2} = 0.75$.
+  \item \begin{enumerate}
+    \item The $\epsilon$ case definitely occured for time steps 2 and 5 (and 1 by design).
+    \item It could have possibly occured on time steps 3 and 4. 
+  \end{enumerate}
+\end{enumerate}
+
 \end{document}
