@@ -2,7 +2,6 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[ngerman]{babel}
 \usepackage{lmodern}
 \usepackage{graphicx}
 \usepackage[pdftex,hyperref,dvipsnames]{xcolor}
@@ -84,6 +83,31 @@
   \item \begin{enumerate}
     \item The $\epsilon$ case definitely occured for time steps 2 and 5 (and 1 by design).
     \item It could have possibly occured on time steps 3 and 4. 
+  \end{enumerate}
+\end{enumerate}
+
+\exercise{Action Selection Strategies}
+
+\begin{enumerate}
+  \item Implementation of greedy():
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{greedy.png}
+  \end{center}
+
+  \item Implementation of epsilon\_greedy():
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{epsilon_greedy.png}
+  \end{center}
+
+  \item greedy() vs epsilon\_greedy():
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{Figure_1.png}
+  \end{center}
+        epsilon\_greedy() performs better since the variance of the arm probability distributions is not $0$. Hence not sticking to the first best arm results in a better overall reward.
+  \item \begin{enumerate}
+    \item One could either manually set another value for $\epsilon$ or let $\epsilon$ change over time.
+    \item Initialize $Q$ with non-zero values.
+    \item Better exploration by playing 'untouched' arms instead of purely random ones.
   \end{enumerate}
 \end{enumerate}
 
