@@ -109,7 +109,19 @@
                  &= \mathbb{E}_\pi [R_{t = 1} + \gamma G_{t+1} | S_t = s] \\
                  &= \sum_a \pi(a | s) \sum_{s'} \sum_r p(s', r | s, a)\left[ r + \gamma \mathbb{E}_\pi[G_{t + 1} | S_{t + 1} = s'] \right]
         \end{align*}
-        no damn clue
+  \item $r(s, a, s')$ and $p(s' | s, a)$ are defined as:\\
+        $r(s, a, s') = \sum_r r \cdot \dfrac{p(s', r | s, a)}{p(s' | s, a)} \implies \sum_r r \cdot p(s', r | s, a) = r(s, a, s') \cdot p(s' | s, a)$\\
+        $p(s' | s, a) = \sum_r p(s', r | s, a)$\\
+        We can substitute terms in $v_\pi(s)$ with these definitions:\\
+        \begin{align*}
+            v_\pi(s) &= \sum_{a} \pi(a | s) \sum_{s'} \sum_r p(s', r | s, a) \left[ r + \gamma v_\pi(s') \right] \\
+                     &\text{factor out terms} \\
+                     &= \sum_{a} \pi(a | s) \sum_{s'} \left[ \sum_r p(s', r | s, a) \cdot r + \sum_r p(s', r | s, a) \gamma v_\pi(s') \right] \\
+                     &\text{use definitions from above} \\
+                     &= \sum_{a} \pi(a | s) \sum_{s'} \left[ r(s, a, s') \cdot p(s' | s, a) + p(s' | s, a) \gamma v_\pi(s') \right] \\
+                     &= \sum_{a} \pi(a | s) \sum_{s'} \left[ p(s' | s, a) \cdot (r(s, a, s') + \gamma v_\pi(s')) \right]
+        \end{align*}
+
 \end{enumerate}
 
 \end{document}
