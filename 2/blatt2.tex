@@ -95,4 +95,21 @@
         A possible \textbf{reward signal} would be $+1$ for not crashing, $-1$ for an accident and scaled by fun factor, etc.
 \end{enumerate}
 
+\exercise{Value Functions}
+
+\begin{enumerate}
+  \item In the setting of the $k$-armed bandit pulling an arm returns an immediate reward
+        but it does not influence future rewards since in the next move any arm can be pulled again.
+        So the future rewards are stochastically independent: $A_t = a$ has not causal effect on $R_{t + 2}, R_{t + 3}, \ldots$. Hence,
+        $q(s, a) = \mathbb{E}[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \ldots | S_t = s, A_t = a] = C + \mathbb{E}[R_{t+1}| S_t = s, A_t = a]$.
+        So, $q(s, a)$ is just offset by a constant $C$, which can be ignored when choosing an arm since every value is offset by the same $C$.
+  \item \begin{align*}
+        v_\pi(s) &= \mathbb{E}_\pi[G_t | S_t = s] \\
+                 &= \mathbb{E}_\pi\left[ \sum_{i = 0}^\infty \gamma^i R_{t + i + 1 | S_t = s} \right] \\
+                 &= \mathbb{E}_\pi [R_{t = 1} + \gamma G_{t+1} | S_t = s] \\
+                 &= \sum_a \pi(a | s) \sum_{s'} \sum_r p(s', r | s, a)\left[ r + \gamma \mathbb{E}_\pi[G_{t + 1} | S_{t + 1} = s'] \right]
+        \end{align*}
+        no damn clue
+\end{enumerate}
+
 \end{document}
