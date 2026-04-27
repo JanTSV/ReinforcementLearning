@@ -1,0 +1,98 @@
+\documentclass[12pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage[pdftex,hyperref,dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage[a4paper,lmargin={2cm},rmargin={2cm},tmargin={3.5cm},bmargin = {2.5cm},headheight = {4cm}]{geometry}
+\usepackage{amsmath,amssymb,amstext,amsthm}
+% \usepackage[lined,algonl,boxed]{algorithm2e} 
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{tcolorbox}
+\usepackage[inline]{enumitem}
+\usepackage[headsepline]{scrlayer-scrpage} 
+
+\usetikzlibrary{automata,positioning}
+
+\usepgfplotslibrary{external}
+%\tikzexternalize
+\pgfplotsset{width=10cm,compat=1.9}
+\pgfplotsset{every axis/.style={
+    axis line style = thick,
+    grid = both,
+    tick pos = left,
+    tick align = outside,
+    tick style = {thick,black},
+    fill = blue,
+	line width = 2pt,
+}}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=8pt,
+  frame=single,
+  breaklines=true,
+  columns=fullflexible
+}
+
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{green!60!black},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=8pt,
+  frame=single,
+  breaklines=true,
+  columns=fullflexible
+}
+
+\renewcommand{\theenumi}{(\alph{enumi})}
+\renewcommand{\labelenumi}{\text{\theenumi}}
+\renewcommand{\labelenumii}{(\roman{enumii})} 
+
+\ohead{Weiting Wang (3855168)\\
+       Nico Strohbach (3546914)\\
+       Jan Theil (3794698)}
+
+\ihead{Reinforcement Learning}
+
+\newcounter{exnum}
+\newcommand{\exercise}[1]{\section*{Problem \theexnum\stepcounter{exnum}: #1}}
+
+\begin{document}
+
+\setcounter{exnum}{1}
+
+\exercise{Formulating Problem}
+
+\begin{enumerate}
+  \item Game of chess: The set of \textbf{states} is the discrete set of all possible board settings. This includes the position of all figures and the turn order of the oponents.
+        The set of \textbf{actions} (for a specific state $S_i$) is the set of possible, valid moves based on $S_i$.
+        The \textbf{reward signal} could be discrete: $+1$ for winning, $0$ for drawing and $-1$ for losing.
+  \item Pick and place robot: The set of \textbf{states} is defined by the possible arm, motor positions of the robot and the localication of the movable object in question.
+        Both of these (sub)properties are within $\mathbb{R}^3$, so this set is continuous.
+        The set of \textbf{actions} is the set of possible robot movements / actions given the current state.
+        The \textbf{reward signal} could be continuous: $+1$ for placing the object correctly and $-1$ for failing / breaking something. This can be scaled according to metrics like efficiency, shortest paths, etc.
+  \item Drone: The set of \textbf{states} is again continuous and consists of the drones position, engine values and maybe sensor values.
+        The set of \textbf{actions} is described by the possible engine control settings of the drone within a state.
+        The \textbf{reward signal} can be $+1$ for succesfully stabilizing and $-1$ for crashing. Again this can be scaled by metrics like maximum unbalanced time, fuel efficiency, etc.
+  \item Rollercoaster controller: The model should control a rollercoaster in a theme park.
+        The set of \textbf{states} is the current position and velocity of the rollercoaster, this is continuous.
+        The set of \textbf{actions} is discrete and consists of the actions to start and stop the rollercoaster and the discrete acceleration between $0$ and $100\%$.
+        A possible \textbf{reward signal} would be $+1$ for not crashing, $-1$ for an accident and scaled by fun factor, etc.
+\end{enumerate}
+
+\end{document}
