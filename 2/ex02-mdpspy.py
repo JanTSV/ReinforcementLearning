@@ -47,10 +47,14 @@ def terminals():
 
 
 def value_policy(policy):
+    # v_pi = r + gamma * P_pi * v_pi
+    # v_pi - gamma * P_pi * v_pi = r
+    # (I - gamma * P_pi) * v_pi = r
+    # v_pi = (I - gamma * P_pi)^(-1) * r
+
     P = trans_matrix_for_policy(policy)
-    # TODO: calculate and return v
-    # (P, r and gamma already given)
-    v = None
+    I = np.eye(n_states)
+    v = np.linalg.solve(I - gamma * P, r)
     return v
 
 
