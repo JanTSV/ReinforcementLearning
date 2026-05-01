@@ -128,7 +128,28 @@
 
 \begin{enumerate}
       \item The policy can choose between $|A|$ actions in each state. Therefore there are $|A|^{|S|}$ different policies.
-      \item 
+      \item \textbf{Value function for policy left:}
+                  \[
+                  v_{\text{left}} =
+                  \begin{bmatrix}
+                  0 & 0 & 0.5369 \\
+                  0 & 0 & 1.4765 \\
+                  0 & 0 & 5
+                  \end{bmatrix}
+                  \]
+
+                  \textbf{Value function for policy right:}
+                  \[
+                  v_{\text{right}} =
+                  \begin{bmatrix}
+                  0.4140 & 0.7746 & 1.3115 \\
+                  0.3640 & 0.8186 & 2.2951 \\
+                  0.1324 & 0 & 5
+                  \end{bmatrix}
+                  \]
+            The left policy is worse and reaches the goal with a lower probability.
+            The right goal reaches the goal with a higher probability and is therefore better.
+            This was expected since we start in the top left corner and the goal is in the bottom right corner.
 \end{enumerate}
 
 \end{document}
