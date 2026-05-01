@@ -10,7 +10,7 @@ custom_map3x3 = [
 ]
 env = gym.make("FrozenLake-v0", desc=custom_map3x3)
 # TODO: Uncomment the following line to try the default map (4x4):
-#env = gym.make("FrozenLake-v0")
+env = gym.make("FrozenLake-v0")
 
 # Uncomment the following lines for even larger maps:
 #random_map = generate_random_map(size=5, p=0.8)
@@ -61,12 +61,32 @@ def value_policy(policy):
 def bruteforce_policies():
     terms = terminals()
     optimalpolicies = []
+    optimalvalue = None
 
-    policy = np.zeros(n_states, dtype=np.int)  # in the discrete case a policy is just an array with action = policy[state]
-    optimalvalue = np.zeros(n_states)
-    
-    # TODO: implement code that tries all possible policies, calculates the values using def value_policy().
-    #       Find the optimal values and the optimal policies to answer the exercise questions.
+    policy = np.zeros(n_states, dtype=int)
+
+    def generate_policies(s):
+        if s == n_states:
+            nonlocal optimalvalue, optimalpolicies
+
+            v = value_policy(policy)
+
+            if optimalvalue is None or np.all(v >= optimalvalue):
+                if optimalvalue is None or np.any(v > optimalvalue):
+                    optimalpolicies = []
+                    optimalvalue = v
+                optimalpolicies.append(policy.copy())
+            return
+
+        if s in terms:
+            policy[s] = 0
+            generate_policies(s + 1)
+        else:
+            for a in range(n_actions):
+                policy[s] = a
+                generate_policies(s + 1)
+
+    generate_policies(0)
 
     print("Optimal value function:")
     print(optimalvalue)
@@ -74,6 +94,7 @@ def bruteforce_policies():
     print(len(optimalpolicies))
     print("optimal policies:")
     print(np.array(optimalpolicies))
+
     return optimalpolicies
 
 

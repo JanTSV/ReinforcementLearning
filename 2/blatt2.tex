@@ -150,6 +150,52 @@
             The left policy is worse and reaches the goal with a lower probability.
             The right goal reaches the goal with a higher probability and is therefore better.
             This was expected since we start in the top left corner and the goal is in the bottom right corner.
+      \item \textbf{Optimal value function:}
+            \[
+            v^* =
+            \begin{bmatrix}
+            0.4976 & 0.8321 & 1.3115 \\
+            0.5362 & 0.9769 & 2.2951 \\
+            0.3064 & 0.0000 & 5.0000
+            \end{bmatrix}
+            \]
+
+            \textbf{Number of optimal policies:}
+
+            \[
+            |\Pi^*| = 2
+            \]
+
+            \textbf{Optimal actions for each state:}
+
+            Using the action encoding:
+            \[
+            0 = \text{LEFT}, \quad 1 = \text{DOWN}, \quad 2 = \text{RIGHT}, \quad 3 = \text{UP}
+            \]
+
+            Two optimal policies were found:
+
+            \[
+            \pi_1 =
+            \begin{bmatrix}
+            1 & 2 & 2 \\
+            3 & 3 & 2 \\
+            0 & 0 & 0
+            \end{bmatrix}
+            \quad
+            \pi_2 =
+            \begin{bmatrix}
+            2 & 2 & 2 \\
+            3 & 3 & 2 \\
+            0 & 0 & 0
+            \end{bmatrix}
+            \]
+
+            \textbf{Interpretation:}
+
+            In most states, the optimal action is \textbf{RIGHT (2)} or \textbf{UP (3)} depending on the position.
+            \textbf{DOWN (1)} is more dangerous than \textbf{RIGHT (2)}, since it can move us close to the hole.
+            \textbf{RIGHT (2)} is therefore the most safe option and due to the rules of the game, it can also move us \textbf{DOWN (1)}, i. e. towards the goal.
 \end{enumerate}
 
 \end{document}
