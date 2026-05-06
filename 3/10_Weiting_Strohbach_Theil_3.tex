@@ -1,0 +1,123 @@
+\documentclass[12pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage[pdftex,hyperref,dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage[a4paper,lmargin={2cm},rmargin={2cm},tmargin={3.5cm},bmargin = {2.5cm},headheight = {4cm}]{geometry}
+\usepackage{amsmath,amssymb,amstext,amsthm}
+% \usepackage[lined,algonl,boxed]{algorithm2e} 
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{tcolorbox}
+\usepackage[inline]{enumitem}
+\usepackage[headsepline]{scrlayer-scrpage} 
+
+\usetikzlibrary{automata,positioning}
+
+\usepgfplotslibrary{external}
+%\tikzexternalize
+\pgfplotsset{width=10cm,compat=1.9}
+\pgfplotsset{every axis/.style={
+    axis line style = thick,
+    grid = both,
+    tick pos = left,
+    tick align = outside,
+    tick style = {thick,black},
+    fill = blue,
+	line width = 2pt,
+}}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=8pt,
+  frame=single,
+  breaklines=true,
+  columns=fullflexible
+}
+
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{green!60!black},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=8pt,
+  frame=single,
+  breaklines=true,
+  columns=fullflexible
+}
+
+\renewcommand{\theenumi}{(\alph{enumi})}
+\renewcommand{\labelenumi}{\text{\theenumi}}
+\renewcommand{\labelenumii}{(\roman{enumii})} 
+
+\ohead{Weiting Wang (3855168)\\
+       Nico Strohbach (3546914)\\
+       Jan Theil (3794698)}
+
+\ihead{Reinforcement Learning}
+
+\newcounter{exnum}
+\newcommand{\exercise}[1]{\section*{Problem \theexnum\stepcounter{exnum}: #1}}
+
+\begin{document}
+
+\setcounter{exnum}{1}
+\exercise{Proofs}
+
+\begin{enumerate}
+      \item We want to show that $(\mathcal{T}v)(s) = \max_a \sum_{s', r} p(s', r | s, a)[r + \gamma v(s')]$ is a $\gamma$ contraction.
+            For this we will use the Contraction mapping theorem with $\infty$-norm from the lecture:
+            \begin{align*}
+                  &\max_s|(\mathcal{T}v)(s) - (\mathcal{T}v')(s)| \text{  ($\infty$-norm)} \\
+                  &= \max_s \left|\max_a \sum_{s', r} p(s', r | s, a)[r + \gamma v(s')] - \max_a \sum_{s', r} p(s', r | s, a)[r + \gamma v'(s')] \right| \text{  (use definitions)} \\
+                  &= \max_s \left|\max_a \sum_{s', r} p(s', r | s, a)[r + \gamma v(s') - r - \gamma v'(s')] \right| \\
+                  &= \max_s \left|\max_a \sum_{s', r} p(s', r | s, a)[\gamma v(s') - \gamma v'(s')] \right| \\
+                  &= \max_s \left|\max_a \sum_{s', r} p(s', r | s, a)[\gamma (v(s') - v'(s'))] \right| \\
+                  &= \gamma \max_s \left|\max_a \sum_{s', r} p(s', r | s, a)[v(s') - v'(s')] \right| \\
+                  &\le \gamma \max_s \left|\max_a \sum_{s', r} p(s', r | s, a) \max_s |v(s) - v'(s)| \right| \text{  (difference is at most max difference)} \\
+                  &\le \gamma \max_s \left|\max_a \sum_{s', r} p(s', r | s, a) \max_s |v(s) - v'(s)| \right| \text{  (difference is at most max difference)} \\
+                  &= \gamma \max_s \left|\max_a \max_s |v(s) - v'(s)| \right| \text{  (since $\sum_{s', r} p(s', r | s, a) = 1$)} \\
+                  &= \gamma \max_s \max_a \max_s \left||v(s) - v'(s)| \right| \\
+                  &= \gamma \max_s \max_s \left||v(s) - v'(s)| \right| \text{  (does not depend on $a$)} \\
+                  &= \gamma \max_s \left||v(s) - v'(s)| \right| \text{  ($\max_s$'s are equal)} \\
+                  &= \gamma \left\| v - v' \right\|_\infty \qed
+            \end{align*}
+
+            Therefor, $\max_s|(\mathcal{T}v)(s) - (\mathcal{T}v')(s)| \text{  ($\infty$-norm)} \leq \gamma \left\| v - v' \right\|_\infty$ and the Bellman optimality operator is a $\gamma$-contraction.
+      \item \begin{align*}
+                  &r \in [r_{max}, r_{min}] \\
+                  &\implies r_{min} \leq r \leq r_{max} \\
+                  &\implies r_{min} \leq R_{t + i + 1} \leq r_{max}, \forall t, i \\
+                  &\implies r_{min} \leq R_{t + i + 1} \leq r_{max} \quad \big| \cdot \sum_{i=0}^\infty \gamma^i \\
+                  &\implies \sum_{i=0}^\infty \gamma^i r_{min} \leq \sum_{i=0}^\infty \gamma^i R_{t + i + 1} \leq \sum_{i=0}^\infty \gamma^i r_{max} \quad \big| \mathbb{E}[\cdot] \\
+                  &\implies \mathbb{E}[\sum_{i=0}^\infty \gamma^i r_{min}] \leq \mathbb{E}[\sum_{i=0}^\infty \gamma^i R_{t + i + 1}] \leq \mathbb{E}[\sum_{i=0}^\infty \gamma^i r_{max}] \\
+                  &\implies \mathbb{E}[\sum_{i=0}^\infty \gamma^i r_{min}] \leq v_\pi(s) \leq \mathbb{E}[\sum_{i=0}^\infty \gamma^i r_{max}] \text{  (definition of $v_\pi(s)$)} \\
+                  &\implies \sum_{i=0}^\infty \gamma^i r_{min} \leq v_\pi(s) \leq \sum_{i=0}^\infty \gamma^i r_{max} \text{  (terms inside $\mathbb{E}[\cdot] are constant$)} \\
+                  &\implies r_{min} \sum_{i=0}^\infty \gamma^i \leq v_\pi(s) \leq r_{max} \sum_{i=0}^\infty \gamma^i \\
+                  &\implies r_{min} \cdot \dfrac{1}{1 - \gamma} \leq v_\pi(s) \leq r_{max} \cdot \dfrac{1}{1 - \gamma} \text{  (since $\gamma < 1$)} \\
+                  &\implies \dfrac{r_{min}}{1 - \gamma} \leq v_\pi(s) \leq \dfrac{r_{max}}{1 - \gamma} \qed
+            \end{align*}
+      \item From the exercise above, we know that $\dfrac{r_{min}}{1 - \gamma} \leq v_\pi(s) \leq \dfrac{r_{max}}{1 - \gamma}$.
+            The difference between $v(s)$ and $v(s')$ is therefor maximal, when either $v(s) = \dfrac{r_{min}}{1 - \gamma}$ and $v(s') = \dfrac{r_{max}}{1 - \gamma}$
+            , or $v(s) = \dfrac{r_{max}}{1 - \gamma}$ and $v(s') = \dfrac{r_{min}}{1 - \gamma}$. W.l.o.g. assume the first case:
+            \begin{align*}
+                  &v(s) = \dfrac{r_{min}}{1 - \gamma}, v(s') = \dfrac{r_{max}}{1 - \gamma} \\
+                  &\implies \left| v(s) - v(s') \right| = \left| \dfrac{r_{min}}{1 - \gamma} - \dfrac{r_{max}}{1 - \gamma} \right| = \dfrac{\left|r_{min} - r_{max}\right|}{1 - \gamma} = \dfrac{r_{max} - r_{min}}{1 - \gamma} 
+            \end{align*}
+            Hence, $\forall s, s': \left| v(s) - v(s') \right| \leq \dfrac{r_{max} - r_{min}}{1 - \gamma} \qed$
+\end{enumerate}
+
+\end{document}
