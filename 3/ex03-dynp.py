@@ -29,6 +29,7 @@ n_actions = env.action_space.n
 def print_policy(policy, env):
     """ This is a helper function to print a nice policy representation from the policy"""
     moves = [u'←', u'↓', u'→', u'↑']
+    moves = ['L', 'D', 'R', 'U']
     if not hasattr(env, 'desc'):
         env = env.env
     dims = env.desc.shape
