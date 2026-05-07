@@ -48,7 +48,11 @@ def value_iteration():
     theta = 1e-8
     gamma = 0.8
 
+    iterations = 0
+
     while True:
+        iterations += 1
+
         delta = 0
 
         # iterate over all states
@@ -75,6 +79,7 @@ def value_iteration():
 
         # stop condition
         if delta < theta:
+            print("Iterations:", iterations)
             break
 
     # derive optimal policy from optimal values
