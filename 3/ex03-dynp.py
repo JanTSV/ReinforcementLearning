@@ -100,6 +100,9 @@ def value_iteration():
         # choose best action
         policy[s] = np.argmax(action_values)
 
+    print("Optimal value function:")
+    print(V_states.reshape(env.desc.shape))
+
     return policy
 
 
