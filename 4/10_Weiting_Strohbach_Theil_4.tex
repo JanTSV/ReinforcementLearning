@@ -15,6 +15,7 @@
 \usepackage{hyperref}
 \usepackage{url}
 \usepackage{tcolorbox}
+\usepackage{float}
 \usepackage[inline]{enumitem}
 \usepackage[headsepline]{scrlayer-scrpage} 
 
@@ -83,6 +84,26 @@
           \item No need to model the whole environment ($p(\cdot)$).
         \end{itemize}
   \item One example would be the humanoid house chore roboter. The environment (action-state set) is way too big to run dynamic programming on. The environment changes, too, which could be handled on-the-fly using MC methods.
+\end{enumerate}
+
+\exercise{Monte Carlo ES for blackjack}
+
+\begin{enumerate}
+  \item For the code, please check \textit{ex04-mc.py}.
+        \begin{figure}[H]
+          \centering
+          \includegraphics[width=\textwidth]{MC10000.png}
+          \caption{After 10,000 episodes}
+          \label{fig:MC10000}
+        \end{figure}
+
+        \begin{figure}[H]
+          \centering
+          \includegraphics[width=\textwidth]{MC500000.png}
+          \caption{After 500,000 episodes}
+          \label{fig:MC500000}
+        \end{figure}
+
 \end{enumerate}
 
 \end{document}
