@@ -98,27 +98,111 @@ def policy_evaluation(maxiter=500000):
     return V
 
 
-def monte_carlo_es():
-    """ Implementation of Monte Carlo ES """
-    # suggested dimensionality: player_sum (12-21), dealer card (1-10), useable ace (true/false)
-    # possible variables to use:
-    pi = np.zeros((10, 10, 2))
-    # Q = np.zeros((10, 10, 2, 2))
-    Q = np.ones((10, 10, 2, 2)) * 100  # recommended: optimistic initialization of Q
+def monte_carlo_es(maxiter=500000):
+    """Monte Carlo Exploring Starts for Blackjack"""
+
+    # policy: 0 = stick, 1 = hit
+    pi = np.zeros((10, 10, 2), dtype=int)
+
+    # optimistic initialization
+    Q = np.ones((10, 10, 2, 2)) * 100.0
+
     returns = np.zeros((10, 10, 2, 2))
     visits = np.zeros((10, 10, 2, 2))
-    maxiter = 100000000  # use whatever number of iterations you want
+
+    def generate_episode():
+        """Generate one episode using exploring starts"""
+
+        states_actions = []
+
+        obs = env.reset()
+        done = False
+
+        # force random first action (exploring starts)
+        first = True
+
+        while not done:
+            player_sum, dealer_card, usable_ace = obs
+
+            # skip invalid states
+            if player_sum < 12 or player_sum > 21:
+                action = np.random.randint(2)
+            else:
+                p = player_sum - 12
+                d = dealer_card - 1
+                u = 0 if usable_ace else 1
+
+                if first:
+                    action = np.random.randint(2)
+                    first = False
+                else:
+                    action = pi[p, d, u]
+
+                states_actions.append((p, d, u, action))
+
+            obs, reward, done, _ = env.step(action)
+
+        return states_actions, reward
+
     for i in range(maxiter):
+
         if i % 100000 == 0:
-            print("Iteration: " + str(i))
+            print(f"\nIteration {i}")
+
+            print("\nPolicy WITH usable ace")
+            print("0=stick, 1=hit")
             print(pi[:, :, 0])
+
+            print("\nPolicy WITHOUT usable ace")
+            print("0=stick, 1=hit")
             print(pi[:, :, 1])
+
+        episode, final_reward = generate_episode()
+
+        G = final_reward
+
+        visited = set()
+
+        # first-visit MC update
+        for (p, d, u, a) in reversed(episode):
+
+            if (p, d, u, a) in visited:
+                continue
+
+            visited.add((p, d, u, a))
+
+            returns[p, d, u, a] += G
+            visits[p, d, u, a] += 1
+
+            Q[p, d, u, a] = (
+                returns[p, d, u, a] /
+                visits[p, d, u, a]
+            )
+
+            # greedy policy improvement
+            pi[p, d, u] = np.argmax(Q[p, d, u])
+
+    # optimal value function
+    V = np.max(Q, axis=3)
+
+    return pi, V
 
 
 def main():
+    # Exercise 2a
     V = policy_evaluation()
     plot_blackjack(V)
-    # monte_carlo_es()
+
+    # Exercise 2b
+    pi, V = monte_carlo_es(500000)
+
+    print("\nFinal policy WITH usable ace")
+    print(pi[:, :, 0])
+
+    print("\nFinal policy WITHOUT usable ace")
+    print(pi[:, :, 1])
+
+    plot_blackjack(V)
 
 
 if __name__ == "__main__":

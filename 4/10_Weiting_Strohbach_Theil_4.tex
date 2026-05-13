@@ -103,6 +103,68 @@
           \caption{After 500,000 episodes}
           \label{fig:MC500000}
         \end{figure}
+  \item The plots show the learned state-value function for Blackjack using Monte Carlo Exploring Starts.
+  Higher values correspond to states with a higher expected reward.
+  States with high player sums (20–21) generally have positive values, especially when the dealer shows a low card.
+  States with low player sums or strong dealer cards have lower values.
+  The value function with a usable ace is generally higher because the ace provides more flexibility and reduces the probability of busting.
+        \begin{figure}[H]
+          \centering
+          \includegraphics[width=\textwidth]{MonteCarlo_2b.png}
+          \caption{After 500,000 iterations}
+          \label{fig:MonteCarlo_2b}
+        \end{figure}
+  The following tables show the final policy $\pi(s)$ learned using Monte Carlo Exploring Starts.  
+  Action encoding: 0 = stick, 1 = hit. X-Axis: dealer's showing card (1-10), Y-Axis: player's current sum (12-21).
+
+  \subsubsection*{Usable Ace}
+
+  \begin{table}[h]
+  \centering
+  \scriptsize
+  \texttt{
+    \begin{tabular}{c|cccccccccc}
+        & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+    \hline
+    12 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+    13 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+    14 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+    15 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+    16 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+    17 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+    18 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 1 \\
+    19 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    20 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    21 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    \end{tabular}
+    }
+  \caption{Policy with usable ace}
+  \end{table}
+
+  \subsubsection*{No Usable Ace}
+
+  \begin{table}[h]
+  \centering
+  \scriptsize
+  \texttt{
+    \begin{tabular}{c|cccccccccc}
+        & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+    \hline
+    12 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+    13 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+    14 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+    15 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+    16 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 1 \\
+    17 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    18 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    19 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    20 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    21 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    \end{tabular}
+    }
+  \caption{Policy without usable ace}
+  \end{table}
+
 
 \end{enumerate}
 
