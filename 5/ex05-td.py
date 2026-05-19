@@ -120,8 +120,40 @@ def sarsa(env, alpha=0.1, gamma=0.9, epsilon=0.5, num_ep=int(1e4)):
 
 def qlearning(env, alpha=0.1, gamma=0.9, epsilon=0.5, num_ep=int(1e4)):
     Q = np.zeros((env.observation_space.n, env.action_space.n))
-    # TODO: implement the qlearning algorithm
-    return Q
+
+    episode_lengths = []
+
+    def epsilon_greedy(Q, s, epsilon):
+        if np.random.rand() < epsilon:
+            return np.random.randint(env.action_space.n)
+        else:
+            return np.argmax(Q[s])
+
+    for i in range(num_ep):
+
+        s = env.reset()
+        done = False
+        episode_length = 0
+
+        while not done:
+
+            # choose action
+            a = epsilon_greedy(Q, s, epsilon)
+
+            # execute action
+            s_, r, done, _ = env.step(a)
+
+            # Q-learning update
+            Q[s][a] += alpha * (
+                r + gamma * np.max(Q[s_]) - Q[s][a]
+            )
+
+            s = s_
+            episode_length += 1
+
+        episode_lengths.append(episode_length)
+
+    return Q, episode_lengths
 
 
 env = gym.make('FrozenLake-v0')
@@ -155,7 +187,21 @@ plt.show()
 exit()
 
 print("\nRunning qlearning")
-Q = qlearning(env)
+Q, episode_lengths = qlearning(env)
+
+window = 100
+avg_lengths = np.convolve(
+    episode_lengths,
+    np.ones(window)/window,
+    mode='valid'
+)
+
+plt.figure()
+plt.plot(avg_lengths)
+plt.xlabel('Episode')
+plt.ylabel('Average Episode Length')
+plt.title('Q-Learning Training Progress')
+
 plot_V(Q, env)
 plot_Q(Q, env)
 print_policy(Q, env)
