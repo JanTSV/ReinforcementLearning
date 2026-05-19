@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 def print_policy(Q, env):
     """ This is a helper function to print a nice policy from the Q function"""
-    moves = ['L', 'D', 'R', 'U']
+    moves = [u'←', u'↓', u'→', u'↑']
     if not hasattr(env, 'desc'):
         env = env.env
     dims = env.desc.shape
