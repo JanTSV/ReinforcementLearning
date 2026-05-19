@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 def print_policy(Q, env):
     """ This is a helper function to print a nice policy from the Q function"""
-    moves = [u'←', u'↓', u'→', u'↑']
+    moves = ['L', 'D', 'R', 'U']
     if not hasattr(env, 'desc'):
         env = env.env
     dims = env.desc.shape
@@ -184,7 +184,6 @@ plt.ylabel('Average Episode Length')
 plt.title('SARSA Training Progress')
 
 plt.show()
-exit()
 
 print("\nRunning qlearning")
 Q, episode_lengths = qlearning(env)
