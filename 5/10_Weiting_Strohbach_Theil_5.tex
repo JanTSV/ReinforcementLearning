@@ -145,6 +145,52 @@ obviously no other estimates are changed during the process.
           \caption{Action-Value function}
           \label{fig:q_q}
         \end{figure}
+    \item In the slippery (stochastic) version of FrozenLake, both SARSA and Q-learning perform significantly worse compared to the deterministic case.
+    The randomness in state transitions introduces noise into the learning process, making it difficult to reliably estimate action values.
+    Even optimal actions may lead to failure due to slipping, which reduces overall performance.
+    As a result, both algorithms converge to similarly conservative and suboptimal policies compared to the deterministic environment, where transitions are fully predictable and learning is more stable.
+
+        \begin{figure}[H]
+          \centering
+          \includegraphics[width=\textwidth]{sarsa_slippery.png}
+          \caption{Average episode length (Sarsa, slippery)}
+          \label{fig:sarsa_slippery}
+        \end{figure}
+
+        \begin{figure}[H]
+          \centering
+          \includegraphics[width=\textwidth]{sarsa_slippery_v.png}
+          \caption{State-value function (Sarsa, slippery)}
+          \label{fig:sarsa_slippery_v}
+        \end{figure}
+
+        \begin{figure}[H]
+          \centering
+          \includegraphics[width=\textwidth]{sarsa_slippery_q.png}
+          \caption{Action-Value function (Sarsa, slippery)}
+          \label{fig:sarsa_slippery_q}
+        \end{figure}
+
+        \begin{figure}[H]
+          \centering
+          \includegraphics[width=\textwidth]{q_slippery.png}
+          \caption{Average episode length (Q-Learning, slippery)}
+          \label{fig:q_slippery}
+        \end{figure}
+
+        \begin{figure}[H]
+          \centering
+          \includegraphics[width=\textwidth]{q_slippery_v.png}
+          \caption{State-value function (Q-Learning, slippery)}
+          \label{fig:q_slippery_v}
+        \end{figure}
+
+        \begin{figure}[H]
+          \centering
+          \includegraphics[width=\textwidth]{q_slippery_q.png}
+          \caption{Action-Value function (Q-Learning, slippery)}
+          \label{fig:q_slippery_q}
+        \end{figure}
 \end{enumerate}
 
 
