@@ -87,17 +87,35 @@ def plot_Q(Q, env):
 
 def sarsa(env, alpha=0.1, gamma=0.9, epsilon=0.5, num_ep=int(1e4)):
     Q = np.zeros((env.observation_space.n, env.action_space.n))
+    use_epsilon_greedy = True
+    episode_lengths = []
 
-    # TODO: implement the sarsa algorithm
+    def epsilon_greedy(Q, s, epsilon):
+        if np.random.rand() < epsilon:
+            return np.random.randint(len(Q[s]))
+        else:
+            return np.argmax(Q[s])
 
-    # This is some starting point performing random walks in the environment:
     for i in range(num_ep):
         s = env.reset()
         done = False
+        episode_length = 0
         while not done:
-            a = np.random.randint(env.action_space.n)
+            if use_epsilon_greedy:
+                a = epsilon_greedy(Q, s, epsilon)
+            else:
+                a = np.random.randint(env.action_space.n)
             s_, r, done, _ = env.step(a)
-    return Q
+            if use_epsilon_greedy:
+                a_ = epsilon_greedy(Q, s_, epsilon)
+            else:
+                a_ = np.random.randint(env.action_space.n)
+            Q[s][a] += alpha * (r + gamma * Q[s_][a_] - Q[s][a])
+            s = s_
+            a = a_
+            episode_length += 1
+        episode_lengths.append(episode_length)
+    return Q, episode_lengths
 
 
 def qlearning(env, alpha=0.1, gamma=0.9, epsilon=0.5, num_ep=int(1e4)):
@@ -115,11 +133,26 @@ env.render()
 print()
 
 print("Running sarsa...")
-Q = sarsa(env)
+Q, episode_lengths = sarsa(env)
 plot_V(Q, env)
 plot_Q(Q, env)
 print_policy(Q, env)
+
+window = 100
+avg_lengths = np.convolve(
+    episode_lengths,
+    np.ones(window)/window,
+    mode='valid'
+)
+
+plt.figure()
+plt.plot(avg_lengths)
+plt.xlabel('Episode')
+plt.ylabel('Average Episode Length')
+plt.title('SARSA Training Progress')
+
 plt.show()
+exit()
 
 print("\nRunning qlearning")
 Q = qlearning(env)

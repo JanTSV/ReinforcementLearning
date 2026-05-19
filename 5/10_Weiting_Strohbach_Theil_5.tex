@@ -94,7 +94,37 @@ With $\alpha = 0.1$ and the convention $V(S_{terminal}) = 0.0$ this would update
 Since a terminal state has been reached, the evaluation of this episode is finished and with the same argumentation as above
 obviously no other estimates are changed during the process.
 
+\exercise{Sarsa and Q-learning on the FrozenLake}
 
+\begin{enumerate}
+  \item For the code, please see \textit{ex05-td.py}. We have implemented \texttt{sarsa()} with an
+        $\epsilon$-greedy policy.
+        \begin{figure}[H]
+          \centering
+          \includegraphics[width=\textwidth]{sarsa_v.png}
+          \caption{State-value function}
+          \label{fig:sarsa_v}
+
+        \end{figure}
+        \begin{figure}[H]
+          \centering
+          \includegraphics[width=\textwidth]{sarsa_q.png}
+          \caption{Action-Value function}
+          \label{fig:sarsa_q}
+        \end{figure}
+
+        \[
+        \begin{array}{cccc}
+        \leftarrow & \uparrow & \leftarrow & \uparrow \\
+        \leftarrow & H & \rightarrow & H \\
+        \uparrow & \downarrow & \leftarrow & H \\
+        H & \rightarrow & \downarrow & G
+        \end{array}
+        \]
+        \[
+        \text{Policy}
+        \]
+\end{enumerate}
 
 
 \end{document}
