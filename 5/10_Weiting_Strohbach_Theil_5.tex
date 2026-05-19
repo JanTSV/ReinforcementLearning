@@ -191,6 +191,14 @@ obviously no other estimates are changed during the process.
           \caption{Action-Value function (Q-Learning, slippery)}
           \label{fig:q_slippery_q}
         \end{figure}
+    \item
+    In the larger 8×8 FrozenLake environment, SARSA fails to significantly improve performance, as shown by the nearly constant episode lengths and zero state-value estimates.
+    This is mainly due to the sparse reward structure and insufficient exploration: the agent rarely reaches the goal state, resulting in almost no non-zero returns to propagate through the Q-values.
+    \\ \\
+    Q-learning shows slight improvement in policy behavior, but the learned value functions remain zero for most states.
+    This indicates that the agent does not receive enough successful episodes for value propagation across the larger state space.
+    Overall, the increased complexity of the environment requires significantly more training episodes or improved exploration strategies.
+
 \end{enumerate}
 
 
