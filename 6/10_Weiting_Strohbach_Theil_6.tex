@@ -78,6 +78,19 @@
 \setcounter{exnum}{1}
 \exercise{Planning and Learning}
 
+\begin{enumerate}
+  \item In Dyna-Q+ an exploration bonus is added to states during planning that have not been visited in a long time.
+        Therefor, it tends to visit and explore states, that have not been visited in a long time.
+        In the first phase, this leads to a faster "accurate" model since it explores all states
+        more broadly compared to Dyna-Q. Hence, it finds the optimal solution faster.
+        This is why the slope of the red curve goes up sooner than the slope of the blue curve
+        but the differences of these curves stays somewhat stationary.
+        In the second phase a new optimal path is possible due to the openning in the right side.
+        Since Dyna-Q+ keeps exploring the right side more often than Dyna-Q (because of the exploration bonus)
+        it finds the new optimal path faster while Dyna-Q tends to stick to a once found optimal path.
+  \item 
+\end{enumerate}
+
 \exercise{Monte Carlo Tree Search on the Taxi environment}
 
 \end{document}
