@@ -88,7 +88,15 @@
         In the second phase a new optimal path is possible due to the openning in the right side.
         Since Dyna-Q+ keeps exploring the right side more often than Dyna-Q (because of the exploration bonus)
         it finds the new optimal path faster while Dyna-Q tends to stick to a once found optimal path.
-  \item 
+  \item Instead of storing a single $R, S'$ entry in the Model table in the line $Model(S, A) \leftarrow R, S'$ we try
+        to store an estimation of the probability distribution of the stochastic environment.
+        This could be done by e.g. keeping counters of each possible $R, S'$-pair and updating them accordingly.
+        So, instead of a single entry we would have another (sub-)row with which an estimation of $p(\cdot)$ could be calculated
+        by $p(\cdot) \approx \dfrac{N(R, S')}{\sum_{R, S} N(R, S)}$. In the planning phase, this estimation is used to obtain new $R, S'$ pairs.
+        This modification would not perform well on changing environments since the once learned probability distribution estimates
+        would change very slowly when new distributions are introduced in the environment. This is the same problem as with normal Dyna-Q learning.
+        To perform well on both stochastic and changing environments, a combination of the modification above and the Dyna-Q+ semantics
+        would be useful. Therefor, something like an exploration bonus would help with changing environments.
 \end{enumerate}
 
 \exercise{Monte Carlo Tree Search on the Taxi environment}
