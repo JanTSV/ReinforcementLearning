@@ -78,6 +78,13 @@
 \setcounter{exnum}{1}
 \exercise{Linear function approximation}
 
+\begin{enumerate}
+  \item Instead of holding all the values of the value function $v(s_i) = w_i$ as a table, one could simulate this by using linear function approximation with unit vectors.
+        The feature vector for a state $s_i$ would look like this: $x(s_i) = \left[ x_1(s_i), x_2(s_i), \ldots, x_d(s_i) \right]^T$ with $d = |S|$ and $x_i(s_i) = 1, \forall_{j \neq i} x_j(s_i) = 0$.
+        This is basically $x(s_i) = e_i$ ($e_i$ being the unit vector with $1$ at position $i$). Thus, the value function would be $\hat{v}(s_i, w) = w^T x(s_i) = w^T e_i = w_i$, which
+        is the same as the (tabular) value function definition above. 
+\end{enumerate}
+
 \exercise{Mountain Car}
 
 \end{document}
