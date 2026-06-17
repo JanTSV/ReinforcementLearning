@@ -83,6 +83,13 @@
         The feature vector for a state $s_i$ would look like this: $x(s_i) = \left[ x_1(s_i), x_2(s_i), \ldots, x_d(s_i) \right]^T$ with $d = |S|$ and $x_i(s_i) = 1, \forall_{j \neq i} x_j(s_i) = 0$.
         This is basically $x(s_i) = e_i$ ($e_i$ being the unit vector with $1$ at position $i$). Thus, the value function would be $\hat{v}(s_i, w) = w^T x(s_i) = w^T e_i = w_i$, which
         is the same as the (tabular) value function definition above. 
+  \item \begin{itemize}
+    \item Tabular case: $Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \left[ R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t) \right]$
+    \item Function approximation (general case): Using action-value function approximation $\hat{q}(s, a, w)$ and $U_t = R_{t+1} + \gamma \hat{q}(S_{t+1}, A_{t+1}, w)$:
+          $\\w_{t+1} = w_t + \alpha \left[ R_{t+1} + \gamma \hat{q}(S_{t+1}, A_{t+1}, w) - \hat{q}(S_t, A_t, w_t) \right] \nabla \hat{q}(S_t, A_t, w_t)$
+    \item Linear function approximation: Using $\hat{q}(s, a, w) = w^T x(s, a) = \sum_{i = 1}^d w_i x_i(s, a)$ and $\nabla \hat{q}(s, a, w) = x(s, a)$:
+          $\\w_{t+1} = w_t + \alpha \left[ R_{t+1} + \gamma  w_t^T x(S_{t+1}, A_{t+1}) - w_t^T x(S_t, A_t) \right] x(s, a)$
+  \end{itemize}
 \end{enumerate}
 
 \exercise{Mountain Car}
